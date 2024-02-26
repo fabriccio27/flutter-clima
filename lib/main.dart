@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:clima_app_2024/screens/loading_screen.dart';
+import 'package:clima_updated/screens/loading_screen.dart';
 
 void main() => runApp(MyApp());
 

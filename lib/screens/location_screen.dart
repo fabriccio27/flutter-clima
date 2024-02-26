@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:clima_app_2024/utilities/constants.dart';
+import 'package:clima_updated/utilities/constants.dart';
 
 class LocationScreen extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 Colors.white.withOpacity(0.8), BlendMode.dstATop),
           ),
         ),
-        constraints: BoxConstraints.expand(),
+        constraints: const BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
