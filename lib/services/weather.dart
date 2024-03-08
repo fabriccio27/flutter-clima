@@ -35,6 +35,15 @@ class WeatherModel {
     }
   }
 
+  Future<dynamic> getCityWeather(String city) async {
+    Uri url = Uri.https('api.weatherapi.com', '/v1/current.json', {
+      'key': Config.weatherApiKey,
+      'q': city,
+      'aqi': 'no',
+    });
+    return await NetworkHelper(url: url).getData();
+  }
+
   Future<dynamic> getLocationWeather() async {
     Location locationService = Location();
     await locationService.getLocation();
