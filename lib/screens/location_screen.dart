@@ -1,3 +1,4 @@
+import 'package:clima_updated/screens/city_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_updated/utilities/constants.dart';
 import 'package:clima_updated/services/weather.dart';
@@ -25,6 +26,14 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void updateUI(dynamic weatherData) {
     setState(() {
+      if (weatherData == null) {
+        temperature = 0;
+        weatherIcon = 'Error';
+        message = 'Unable to get weather data';
+        name = '';
+        return;
+      }
+
       double temp = weatherData['current']['temp_c'];
       temperature = temp.toInt();
       name = weatherData['location']['name'];
@@ -56,15 +65,20 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   TextButton(
-                    onPressed: () {},
-                    child: Icon(
+                    onPressed: () async {
+                      dynamic weatherData = await WeatherModel().getLocationWeather();
+                      updateUI(weatherData);
+                    },
+                    child: const Icon(
                       Icons.near_me,
                       size: 50.0,
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
-                    child: Icon(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => CityScreen()));
+                    },
+                    child: const Icon(
                       Icons.location_city,
                       size: 50.0,
                     ),
@@ -72,7 +86,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(left: 15.0),
+                padding: const EdgeInsets.only(left: 15.0),
                 child: Row(
                   children: <Widget>[
                     Text(
