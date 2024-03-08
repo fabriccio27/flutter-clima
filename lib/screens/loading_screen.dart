@@ -1,9 +1,7 @@
-import 'package:clima_updated/services/networking.dart';
 import 'package:flutter/material.dart';
-import 'package:clima_updated/services/location.dart';
-import 'package:clima_updated/config_dev.dart';
 import 'package:clima_updated/screens/location_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:clima_updated/services/weather.dart';
 
 
 class LoadingScreen extends StatefulWidget {
@@ -22,17 +20,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getLocationData() async {
-    Location locationService = Location();
-    await locationService.getLocation();
-    latitude = locationService.latitude;
-    longitude = locationService.longitude;
-    Uri url = Uri.https('api.weatherapi.com', '/v1/current.json', {
-      'key': Config.weatherApiKey,
-      'q': '${latitude.toString()},${longitude.toString()}',
-      'aqi': 'no',
-    });
-    NetworkHelper networkHelper = NetworkHelper(url: url);
-    var weatherData = await networkHelper.getData();
+    WeatherModel weatherService = WeatherModel();
+    dynamic weatherData = weatherService.getLocationWeather();
     Navigator.push(context, MaterialPageRoute(builder: (context) => LocationScreen(locationWeather: weatherData,)));
   }
 

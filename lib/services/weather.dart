@@ -1,3 +1,7 @@
+import 'package:clima_updated/config_dev.dart';
+import 'package:clima_updated/services/location.dart';
+import 'package:clima_updated/services/networking.dart';
+
 class WeatherModel {
   String getWeatherIcon(int condition) {
     if (condition < 300) {
@@ -29,5 +33,17 @@ class WeatherModel {
     } else {
       return 'Bring a 🧥 just in case';
     }
+  }
+
+  Future<dynamic> getLocationWeather() async {
+    Location locationService = Location();
+    await locationService.getLocation();
+    Uri url = Uri.https('api.weatherapi.com', '/v1/current.json', {
+      'key': Config.weatherApiKey,
+      'q': '${locationService.latitude.toString()},${locationService.longitude.toString()}',
+      'aqi': 'no',
+    });
+    NetworkHelper networkHelper = NetworkHelper(url: url);
+    return await networkHelper.getData();
   }
 }
